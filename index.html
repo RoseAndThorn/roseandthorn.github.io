@@ -80,42 +80,44 @@
         { title: "Project Phi", description: "An innovative approach to problem V." },
     ];
 
-    function spawnBubble() {
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
+function spawnBubble() {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
 
-        // Randomly select a project
-        const randomProject = projects[Math.floor(Math.random() * projects.length)];
-        bubble.textContent = randomProject.title; // Set bubble text to project title
-        bubble.dataset.projectTitle = randomProject.title; // Set title
-        bubble.dataset.projectDescription = randomProject.description; // Set description
+    // Randomly select a project
+    const randomProject = projects[Math.floor(Math.random() * projects.length)];
+    
+    // Set the bubble text and dataset attributes
+    bubble.textContent = randomProject.title; // Set bubble text to project title
+    bubble.dataset.projectTitle = randomProject.title; // Set title for modal
+    bubble.dataset.projectDescription = randomProject.description; // Set description for modal
 
-        // Randomize the x position for bubble spawn
-        const xPosition = Math.random() * (window.innerWidth - 100);  // 100 is the bubble width
-        bubble.style.left = `${xPosition}px`;
-        bubble.style.transform = 'translateY(0)'; // Reset position before animation
-        document.getElementById('about-me-section').appendChild(bubble);
+    // Randomize the x position for bubble spawn
+    const xPosition = Math.random() * (window.innerWidth - 100);  // 100 is the bubble width
+    bubble.style.left = `${xPosition}px`;
+    bubble.style.transform = 'translateY(0)'; // Reset position before animation
+    document.getElementById('about-me-section').appendChild(bubble);
 
-        // Trigger the animation
+    // Trigger the animation
+    setTimeout(() => {
+        bubble.style.animation = 'floatUp 5s forwards';  // Start the floating animation
+    }, 10);
+
+    bubble.addEventListener('click', function() {
+        // Stop the bubble from floating
+        bubble.style.animation = 'none'; // Stop the animation
+
+        // Open the modal with project details
+        openModal(this.dataset.projectTitle, this.dataset.projectDescription);
+    });
+
+    bubble.addEventListener('animationend', function() {
+        this.classList.add('burst');  // Trigger burst effect
         setTimeout(() => {
-            bubble.style.animation = 'floatUp 5s forwards';  // Start the floating animation
-        }, 10);
-
-        bubble.addEventListener('click', function() {
-            // Stop the bubble from floating
-            bubble.style.animation = 'none'; // Stop the animation
-
-            // Open the modal with project details
-            openModal(this.dataset.projectTitle, this.dataset.projectDescription);
-        });
-
-        bubble.addEventListener('animationend', function() {
-            this.classList.add('burst');  // Trigger burst effect
-            setTimeout(() => {
-                this.remove();  // Remove bubble from the DOM after bursting
-            }, 500);  // After burst effect
-        });
-    }
+            this.remove();  // Remove bubble from the DOM after bursting
+        }, 500);  // After burst effect
+    });
+}
 
     // Spawn a bubble every 2 seconds
     setInterval(spawnBubble, 200);
