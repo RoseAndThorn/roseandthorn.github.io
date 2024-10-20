@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.tabs {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tablink {
+    background-color: #555;
+    color: white;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    outline: none;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#about-me-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bubble {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.7), rgba(173,216,230,0.5));
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    animation: floatUp 5s infinite;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    90% { transform: translateY(-90vh); }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+.burst {
+    animation: burstEffect 0.5s ease-out forwards;
+}
+
+@keyframes burstEffect {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(3); opacity: 0; }
+}
+
+#deep-dark-zone {
+    height: 100vh;
+    background-color: #000;
+    position: relative;
+}
+
+.hidden-pixel {
+    width: 10px;
+    height: 10px;
+    background-color: #111;
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    opacity: 0.2;
+    transition: opacity 0.5s;
+}
+
+.hidden-pixel:hover {
+    opacity: 1;
+}
+
+.hidden-message {
+    color: #fff;
+    display: none;
+}
+
+.hidden-pixel:hover + .hidden-message {
+    display: block;
+}
