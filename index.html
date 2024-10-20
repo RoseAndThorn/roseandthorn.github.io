@@ -56,54 +56,69 @@
             evt.currentTarget.classList.add("active");
         }
     
-        function spawnBubble() {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            bubble.textContent = "Project";  // You can customize this text or randomize it.
-            bubble.dataset.projectTitle = "Project Title"; // Set a title for the project
-            bubble.dataset.projectDescription = "Project description goes here."; // Set a description for the project
-    
-            // Randomize the x position for bubble spawn
-            const xPosition = Math.random() * (window.innerWidth - 100);  // 100 is the bubble width
-            bubble.style.left = `${xPosition}px`;
-            bubble.style.transform = 'translateY(0)'; // Reset position before animation
-            document.getElementById('about-me-section').appendChild(bubble);
-    
-            // Trigger the animation
+        const projects = [
+        { title: "Project Alpha", description: "An innovative solution for problem A." },
+        { title: "Project Beta", description: "A comprehensive study on topic B." },
+        { title: "Project Gamma", description: "A cutting-edge application for task C." },
+        { title: "Project Delta", description: "An experimental approach to challenge D." },
+        { title: "Project Epsilon", description: "A tool for enhancing productivity in area E." },
+        { title: "Project Zeta", description: "A research project focused on subject F." },
+        { title: "Project Eta", description: "A prototype for a product related to G." },
+        { title: "Project Theta", description: "An analysis of data concerning issue H." },
+        { title: "Project Iota", description: "A creative project exploring concept I." },
+        { title: "Project Kappa", description: "A software development project on topic J." },
+        { title: "Project Lambda", description: "A project aimed at improving process K." },
+        { title: "Project Mu", description: "An initiative to tackle problem L." },
+        { title: "Project Nu", description: "A collaborative project addressing issue M." },
+        { title: "Project Xi", description: "A venture into the realms of topic N." },
+        { title: "Project Omicron", description: "An exploration of idea O." },
+        { title: "Project Pi", description: "A product design for application Q." },
+        { title: "Project Rho", description: "A solution aimed at enhancing experience R." },
+        { title: "Project Sigma", description: "A comprehensive guide on subject S." },
+        { title: "Project Tau", description: "A case study regarding issue T." },
+        { title: "Project Upsilon", description: "A campaign focused on awareness for topic U." },
+        { title: "Project Phi", description: "An innovative approach to problem V." },
+    ];
+
+    function spawnBubble() {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+
+        // Randomly select a project
+        const randomProject = projects[Math.floor(Math.random() * projects.length)];
+        bubble.textContent = randomProject.title; // Set bubble text to project title
+        bubble.dataset.projectTitle = randomProject.title; // Set title
+        bubble.dataset.projectDescription = randomProject.description; // Set description
+
+        // Randomize the x position for bubble spawn
+        const xPosition = Math.random() * (window.innerWidth - 100);  // 100 is the bubble width
+        bubble.style.left = `${xPosition}px`;
+        bubble.style.transform = 'translateY(0)'; // Reset position before animation
+        document.getElementById('about-me-section').appendChild(bubble);
+
+        // Trigger the animation
+        setTimeout(() => {
+            bubble.style.animation = 'floatUp 5s forwards';  // Start the floating animation
+        }, 10);
+
+        bubble.addEventListener('click', function() {
+            // Stop the bubble from floating
+            bubble.style.animation = 'none'; // Stop the animation
+
+            // Open the modal with project details
+            openModal(this.dataset.projectTitle, this.dataset.projectDescription);
+        });
+
+        bubble.addEventListener('animationend', function() {
+            this.classList.add('burst');  // Trigger burst effect
             setTimeout(() => {
-                bubble.style.animation = 'floatUp 5s forwards';  // Start the floating animation
-            }, 10);
-    
-            bubble.addEventListener('click', function() {
-                // Stop the bubble from floating
-                bubble.style.animation = 'none'; // Stop the animation
-    
-                // Open the modal with project details
-                openModal(this.dataset.projectTitle, this.dataset.projectDescription);
-            });
-    
-            bubble.addEventListener('animationend', function() {
-                this.classList.add('burst');  // Trigger burst effect
-                setTimeout(() => {
-                    this.remove();  // Remove bubble from the DOM after bursting
-                }, 500);  // After burst effect
-            });
-        }
-    
-        // Open modal
-        function openModal(title, description) {
-            document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal-description').textContent = description;
-            document.getElementById('project-modal').style.display = "block";
-        }
-    
-        // Close modal
-        function closeModal() {
-            document.getElementById('project-modal').style.display = "none";
-        }
-    
-        // Spawn a bubble every 2 seconds
-        setInterval(spawnBubble, 2000);
+                this.remove();  // Remove bubble from the DOM after bursting
+            }, 500);  // After burst effect
+        });
+    }
+
+    // Spawn a bubble every 2 seconds
+    setInterval(spawnBubble, 200);
     
         // Load articles dynamically (dummy data for now)
         const articles = [
