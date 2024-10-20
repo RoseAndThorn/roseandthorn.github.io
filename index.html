@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="tabs">
+        <button class="tablink" onclick="openSection(event, 'about-me')">About Me</button>
+        <button class="tablink" onclick="openSection(event, 'deep-dark-zone')">Deep Dark Zone</button>
+        <button class="tablink" onclick="openSection(event, 'blog-things')">Blog Things</button>
+    </div>
+
+    <div id="about-me" class="tab-content active">
+        <div id="about-me-section">
+            <div class="bubble" data-project="Project 1: Description goes here.">Project 1</div>
+            <div class="bubble" data-project="Project 2: Description goes here.">Project 2</div>
+            <div class="bubble" data-project="Project 3: Description goes here.">Project 3</div>
+        </div>
+        <div id="project-description"></div>
+    </div>
+
+    <div id="deep-dark-zone" class="tab-content">
+        <div id="deep-dark-zone">
+            <div class="hidden-pixel"></div>
+            <div class="hidden-pixel"></div>
+            <div class="hidden-message">You've found something hidden!</div>
+        </div>
+    </div>
+
+    <div id="blog-things" class="tab-content">
+        <div id="blog-things">
+            <!-- Articles will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function openSection(evt, sectionName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(sectionName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        document.querySelectorAll('.bubble').forEach(bubble => {
+            bubble.addEventListener('animationend', function() {
+                if (this.style.transform === 'translateY(-100vh)') {
+                    this.classList.add('burst');  // Trigger burst effect
+                    setTimeout(() => {
+                        this.classList.remove('burst');
+                        this.style.transform = 'translateY(0)';  // Reset bubble to bottom
+                    }, 500);  // After burst effect
+                }
+            });
+        });
+
+        // Load articles dynamically (dummy data for now)
+        const articles = [
+            { title: "Article 1", tags: ["neural networks", "AI"], content: "Content of article 1..." },
+            { title: "Article 2", tags: ["AI", "learning"], content: "Content of article 2..." },
+            { title: "Article 3", tags: ["neural networks", "data"], content: "Content of article 3..." }
+        ];
+
+        const blogContainer = document.getElementById('blog-things');
+
+        articles.forEach(article => {
+            const articleDiv = document.createElement('div');
+            articleDiv.innerHTML = `<h3>${article.title}</h3><p>${article.content}</p>`;
+            blogContainer.appendChild(articleDiv);
+        });
+    </script>
+</body>
+</html>
