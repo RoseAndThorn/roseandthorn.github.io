@@ -16,7 +16,6 @@
 
     <div id="about-me" class="tab-content active">
         <div id="about-me-section"></div>
-        <div id="project-description"></div>
     </div>
 
     <div id="deep-dark-zone" class="tab-content">
@@ -30,6 +29,15 @@
     <div id="blog-things" class="tab-content">
         <div id="blog-things">
             <!-- Articles will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Modal for Project Details -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
         </div>
     </div>
 
@@ -52,6 +60,8 @@
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
             bubble.textContent = "Project";  // You can customize this text or randomize it.
+            bubble.dataset.projectTitle = "Project Title"; // Set a title for the project
+            bubble.dataset.projectDescription = "Project description goes here."; // Set a description for the project
 
             // Randomize the x position for bubble spawn
             const xPosition = Math.random() * (window.innerWidth - 100);  // 100 is the bubble width
@@ -64,12 +74,28 @@
                 bubble.style.animation = 'floatUp 5s forwards';  // Start the floating animation
             }, 10);
 
+            bubble.addEventListener('click', function() {
+                openModal(this.dataset.projectTitle, this.dataset.projectDescription);
+            });
+
             bubble.addEventListener('animationend', function() {
                 this.classList.add('burst');  // Trigger burst effect
                 setTimeout(() => {
                     this.remove();  // Remove bubble from the DOM after bursting
                 }, 500);  // After burst effect
             });
+        }
+
+        // Open modal
+        function openModal(title, description) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('project-modal').style.display = "block";
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('project-modal').style.display = "none";
         }
 
         // Spawn a bubble every 2 seconds
@@ -92,3 +118,4 @@
     </script>
 </body>
 </html>
+
